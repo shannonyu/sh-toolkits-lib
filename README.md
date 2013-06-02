@@ -88,7 +88,7 @@ A valid function definition must be:
 From above definition, we get follow part:
  
 * Function name: func_name
-* Function parameter definition: <param1> [param2]
+* Function parameter definition: &lt;param1&gt; [param2]
     * Angular bracket: required paramameter
     * Square bracket: optional parameter
 
@@ -98,7 +98,7 @@ In the example, when we missing required argument or write wrong argument name, 
 
 In addition to this, it will assign the argument value to variable, whose name is the same as the parameter in the definition:
 
-   function func_name() # <param1> [param2]
+    function func_name() # <param1> [param2]
     {
         check_params "$@"
         echo param1=$param1 param2=$param2
