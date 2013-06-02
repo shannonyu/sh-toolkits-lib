@@ -1,0 +1,3 @@
+[submodule "src/logdotsh"]
+	path = src/logdotsh
+	url = https://github.com/dangoakachan/logdotsh
