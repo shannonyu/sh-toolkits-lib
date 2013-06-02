@@ -22,9 +22,15 @@ function show_hidden_char() # <str>
     echo "$str" | cat -A
 }
 
+# Extra help
+function toolkit_1_help()
+{
+    echo "This is extra help for test2"
+}
+
 function toolkit_1() # <p1> [p2]
 {
-    check_params "$@"
+    check_params --help_func=toolkit_1_help "$@"
     echo p1=$p1 p2=$p2
 }
 
