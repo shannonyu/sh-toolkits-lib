@@ -1,6 +1,6 @@
 #sh-toolkits-lib
 
-A library to implement shell toolkits, which means collect similar or common operations together. But there is more, you can use this library to implement api sdk also.
+A library to implement shell toolkits, which means collect similar or common operations together. But there is more, you can use this library to implement api sdk, too.
 
 #Get started
 
@@ -158,7 +158,7 @@ In shell, we use 'set -x' to debug script. In use of sh-toolkits-lib, you can en
 
 ##Bash completion
 
-See complete.sh in the src directory fore more help
+See complete.sh in the src directory for more help
 
 ##More
 
