@@ -43,6 +43,12 @@ VERSION='0.2.1'
 FUNC_NAME_REGEX="[a-zA-Z_][a-zA-Z0-9_]*"  # Function name
 WORD_REGEX="[a-zA-Z0-9_]*"                # Word
 
+# Replace DOT into __DOT__
+DOT='__DOT__'
+
+# Replace hyphen into __HYPHEN__
+HYPHEN='__HYPHEN__'
+
 # List the function definition in specified module
 # $1: module path
 # $2: function name or regular expression
@@ -178,14 +184,16 @@ EOF
 # $1: the parameter
 function get_param_name()
 {
-    echo "$1" | awk -F= '{print $1}'
+    #echo "$1" | awk -F= '{print $1}'
+    echo "$1" | cut -d= -f1
 }
 
 # Get the parameter value
 # $1: the parameter
 function get_param_value()
 {
-   echo "$1" | awk -F= '{$1="";print $0}'| cut -c2-
+    #echo "$1" | awk -F= '{$1="";print $0}'| cut -c2-
+    echo "$1" | cut -d= -f2-
 }
 
 # Print the parameters passed to function
@@ -267,6 +275,32 @@ function check_param_type()
     else
         warn_msg "'$param_value' is an invalid $param_type!\n"
     fi
+}
+
+# Make a valid variable name
+# $1: name string
+# Ex: var_name a.b-c => a__DOT__B__HYPHEN__c
+function var_name()
+{
+    echo "$1" | sed "s/\./$DOT/g;s/-/$HYPHEN/g"
+}
+
+# Be oppose to above
+function un_var_name()
+{
+    echo "$1" | sed "s/$DOT/./g;s/$HYPHEN/-/g"
+}
+
+# Get the variable value
+# $1: variable name
+# Ex:
+# var1="xxx"
+# var_value "var1" = > "xxx" 
+function var_value()
+{
+    local name=`var_name "$1"`
+
+    echo "${!name}"
 }
 
 # Check the target function parameters and create variable corresponding
@@ -370,6 +404,7 @@ function check_params()
 
         # Create parameter variable if it is valid
         if echo "$func_params" | grep -q "\<$param_name\>"; then
+            param_name=`var_name "$param_name"`
             eval "$param_name='$param_value'"
         else # Not found parameter
             error_msg "'$param_name' is invalid to $func_name!\n"
