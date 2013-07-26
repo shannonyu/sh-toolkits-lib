@@ -184,16 +184,14 @@ EOF
 # $1: the parameter
 function get_param_name()
 {
-    #echo "$1" | awk -F= '{print $1}'
-    echo "${1%%=*}"
+    echo "$1" | awk -F= '{print $1}'
 }
 
 # Get the parameter value
 # $1: the parameter
 function get_param_value()
 {
-    #echo "$1" | awk -F= '{$1="";OFS="=";print $0}'| cut -c2-
-    echo "${1#*=}"
+    echo "$1" | awk -F= '{$1="";OFS="=";print $0}'| cut -c2-
 }
 
 # Print the parameters passed to function
