@@ -403,7 +403,9 @@ function check_params()
         # Create parameter variable if it is valid
         if echo "$func_params" | grep -q "\<$param_name\>"; then
             param_name=`var_name "$param_name"`
-            eval "$param_name='$param_value'"
+            
+            # filter color escape strings in param value                                                                                                                          
+            eval "$param_name='$(echo $param_value | sed -r 's/\x1B\[[0-9;]*[mK]//g')'"
         else # Not found parameter
             error_msg "'$param_name' is invalid to $func_name!\n"
             print_function_help "$mod_path" "$func_name" "$help_func_name"
@@ -482,9 +484,7 @@ function execute_function()
                 var_name=${var_name#--}
                 var_val=`get_param_value "$1"`
 
-                # filter color escape strings in param value
-                eval "$param_name='$(echo $param_value | sed -r 's/\x1B\[[0-9;]*[mK]//g')'"
-                #eval "$var_name='$var_val'"
+                eval "$var_name='$var_val'"
                 shift;;
         esac
     done
