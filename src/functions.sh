@@ -482,7 +482,9 @@ function execute_function()
                 var_name=${var_name#--}
                 var_val=`get_param_value "$1"`
 
-                eval "$var_name='$var_val'"
+                # filter color escape strings in param value
+                eval "$param_name='$(echo $param_value | sed -r 's/\x1B\[[0-9;]*[mK]//g')'"
+                #eval "$var_name='$var_val'"
                 shift;;
         esac
     done
